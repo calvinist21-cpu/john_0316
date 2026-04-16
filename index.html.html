@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요한복음 3:16 - Gemini Style 9:16 Loop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/subsets/Paperlogy-dynamic-subset.css" type="text/css"/>
+    <style>
+        :root {
+            --gemini-blue: #4285F4;
+            --gemini-purple: #9B72CB;
+            --gemini-pink: #D96570;
+            --text-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            word-break: keep-all;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: "Paperlogy", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 9:16 Ratio Container (Perfectly Responsive) */
+        .container {
+            position: relative;
+            aspect-ratio: 9 / 16;
+            height: 100vh; /* Based on viewport height */
+            background: linear-gradient(-45deg, #0d1117, #161b22, #0d1117);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+        }
+
+        /* Animated Gemini Gradient Background */
+        .gradient-bg {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, 
+                rgba(66, 133, 244, 0.15) 0%, 
+                rgba(155, 114, 203, 0.15) 30%, 
+                rgba(217, 101, 112, 0.1) 60%, 
+                transparent 100%);
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Main Content */
+        .verse-section {
+            position: relative;
+            z-index: 5;
+            padding: 0 10%; /* Responsive padding */
+            text-align: center;
+            width: 100%;
+        }
+
+        .verse-reference {
+            font-size: 2vh; /* Scaled font size */
+            color: var(--gemini-blue);
+            margin-bottom: 2vh;
+            font-weight: 700;
+            letter-spacing: 0.5vh;
+            opacity: 0;
+            transform: translateY(2vh);
+        }
+
+        .verse-reference.active {
+            animation: fadeInUp 1s forwards;
+        }
+
+        .verse-text {
+            /* Ensures all text stays visible within 9:16 frame */
+            font-size: 4vh; 
+            line-height: 1.2;
+            color: var(--text-white);
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(3vh) scale(0.95);
+            filter: blur(8px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 0.2vh 0.4vh;
+        }
+
+        .word.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, #4285F4, #9B72CB, #D96570);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Decorative Glow */
+        .footer-glow {
+            position: absolute;
+            bottom: -5%;
+            width: 100%;
+            height: 15%;
+            background: linear-gradient(to top, rgba(155, 114, 203, 0.25), transparent);
+            filter: blur(40px);
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Printable PDF Setting (9:16 ratio) */
+        @media print {
+            @page {
+                size: 1080px 1920px;
+                margin: 0;
+            }
+            body { background: #000; -webkit-print-color-adjust: exact; }
+            .container { width: 100%; max-width: none; height: 100vh; }
+            .word { opacity: 1 !important; transform: none !important; filter: none !important; }
+            .verse-reference { opacity: 1 !important; transform: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="gradient-bg"></div>
+    
+    <div class="verse-section">
+        <div class="verse-reference" id="ref">JOHN 3:16</div>
+        <div class="verse-text" id="verseContainer">
+            <!-- Words will be injected here -->
+        </div>
+    </div>
+
+    <div class="footer-glow"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fullText = "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라";
+        const container = document.getElementById('verseContainer');
+        const refElement = document.getElementById('ref');
+        const highlightWords = ["사랑하사", "독생자를", "믿는", "영생을"];
+
+        // 텍스트를 단어별로 쪼개어 생성
+        const words = fullText.split(' ');
+        words.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.textContent = word;
+            span.className = 'word';
+            if (highlightWords.some(h => word.includes(h))) {
+                span.classList.add('highlight');
+            }
+            container.appendChild(span);
+            if (index < words.length - 1) {
+                container.appendChild(document.createTextNode(' '));
+            }
+        });
+
+        const wordSpans = document.querySelectorAll('.word');
+
+        function startLoop() {
+            // 1. 초기화 (모든 애니메이션 상태 제거)
+            refElement.classList.remove('active');
+            wordSpans.forEach(span => {
+                span.classList.remove('active');
+                span.style.transition = 'none';
+            });
+
+            // 강제 리플로우
+            void refElement.offsetWidth;
+
+            // 2. 애니메이션 시퀀스 시작
+            setTimeout(() => {
+                refElement.classList.add('active');
+                
+                wordSpans.forEach((span, idx) => {
+                    setTimeout(() => {
+                        span.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                        span.classList.add('active');
+                    }, idx * 180 + 800); 
+                });
+            }, 500);
+        }
+
+        // 최초 실행
+        startLoop();
+
+        // 12초마다 반복 (구절을 다 읽을 충분한 시간 확보)
+        setInterval(startLoop, 12000);
+    });
+</script>
+
+</body>
+</html>
