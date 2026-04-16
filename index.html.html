@@ -120,6 +120,23 @@
             font-weight: 800;
         }
 
+        /* Bottom Image Style */
+        .bottom-image {
+            position: absolute;
+            bottom: 5vh;
+            width: 12vh; /* Small size proportionate to height */
+            height: auto;
+            z-index: 10;
+            opacity: 0.7;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            transition: opacity 0.3s ease;
+        }
+
+        .bottom-image:hover {
+            opacity: 1;
+        }
+
         /* Decorative Glow */
         .footer-glow {
             position: absolute;
@@ -162,6 +179,9 @@
             <!-- Words will be injected here -->
         </div>
     </div>
+
+    <!-- Requested Bottom Image -->
+    <img src="https://i.ifh.cc/YA8b7Q.jpg" class="bottom-image" alt="Decoration">
 
     <div class="footer-glow"></div>
 </div>
